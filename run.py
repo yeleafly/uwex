@@ -1,5 +1,5 @@
 # coding=utf-8
-from flask import Flask
+from flask import Flask, request
 import logging
 from logging.handlers import RotatingFileHandler
 from uwex.token import token
@@ -16,7 +16,7 @@ def hello_world():
 
 @app.route('/check_token')
 def check_token():
-    return "ok"
+    return request.args.get('echostr')
 
 
 def timer(n):
