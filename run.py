@@ -34,8 +34,9 @@ if __name__ == '__main__':
     handler = RotatingFileHandler('uwex.log', maxBytes=10000, backupCount=1)
     handler.setLevel(logging.INFO)
     app.logger.addHandler(handler)
-    app.run(host='127.0.0.1', port=9001)
+
     timer(config.timer_refresh_access_token)
+    app.run(host='127.0.0.1', port=9001)
 
 
 
