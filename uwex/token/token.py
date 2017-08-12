@@ -2,14 +2,16 @@
 import requests
 import config
 from uwex.common.uredis import rpool
+import json
 
 
 def refresh_access_token():
     "刷新微信的access_token"
     token_para = {'grant_type': 'client_credential', 'appid': config.app_id, 'secret': config.app_secret}
     r = requests.get(config.url_wechat_access_token, token_para)
+    expires_in = json.loads(r.text)['expires_in']
     # save token to redis
-    rpool.set(config.redis_access_token_key, r.text)
+    rpool.set(config.redis_access_token_key, r.text, px=expires_in)
     return r.text
 
 
